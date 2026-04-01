@@ -133,6 +133,7 @@
       <path value="$PROJECT_DIR$/samanali_hotel_booking/vendor/livewire/livewire" />
       <path value="$PROJECT_DIR$/samanali_hotel_booking/vendor/livewire/flux" />
       <path value="$PROJECT_DIR$/samanali_hotel_booking/vendor/hamcrest/hamcrest-php" />
+      <path value="$PROJECT_DIR$/samanali_hotel_booking/vendor/laravel/breeze" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3">

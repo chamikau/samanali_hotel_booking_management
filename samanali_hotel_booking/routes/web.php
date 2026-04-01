@@ -1,18 +1,28 @@
 <?php
 
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
-
-Route::resource('rooms', RoomController::class);
-Route::resource('bookings', BookingController::class);
-
-Route::post('bookings/{id}/check-in', [BookingController::class, 'checkIn'])->name('bookings.checkin');
-Route::post('bookings/{id}/check-out', [BookingController::class, 'checkOut'])->name('bookings.checkout');
-Route::post('bookings/{id}/pay', [BookingController::class, 'pay'])->name('bookings.pay');
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('dashboard', 'dashboard')->name('dashboard');
+Route::get('/', function () {
+    return view('welcome');
 });
 
-require __DIR__.'/settings.php';
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('rooms', RoomController::class);
+    Route::resource('bookings', BookingController::class);
+
+    Route::post('bookings/{id}/check-in', [BookingController::class, 'checkIn'])->name('bookings.checkin');
+    Route::post('bookings/{id}/check-out', [BookingController::class, 'checkOut'])->name('bookings.checkout');
+    Route::post('bookings/{id}/pay', [BookingController::class, 'pay'])->name('bookings.pay');
+});
+
+require __DIR__.'/auth.php';

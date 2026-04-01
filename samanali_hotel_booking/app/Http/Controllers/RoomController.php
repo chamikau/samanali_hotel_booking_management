@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Room;
 use App\Models\RoomType;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -39,6 +41,18 @@ class RoomController extends Controller
         ]);
 
         return redirect()->route('rooms.index')->with('success', 'Room created');
+    }
+
+    /**
+     * @param $id
+     * @return Factory|View
+     */
+    public function edit($id)
+    {
+        $room = Room::findOrFail($id);
+        $roomTypes = RoomType::all();
+
+        return view('rooms.edit', compact('room', 'roomTypes'));
     }
 
 }
